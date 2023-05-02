@@ -33,7 +33,7 @@ Wrapper of prediction pipeline
 """
 function predict_wrapper(pc::StructType, train_x::FairDataset, valid_x::FairDataset, test_x::FairDataset; outdir)
     if train_x.name == "synthetic" # fair label
-        predict_prob = prediction_per_example(pc, train_x, valid_x, test_x; dir=outdir, use_fair_label=true)
+        predict_prob = prediction_per_example(pc, train_x, valid_x, test_x; dir=outdir, use_fair_label=true, debias = true)
         results = dict_init(PREDICT_HEADER)
         for (i, data_str) in enumerate(["train_x", "valid_x", "test_x"])
             p = predict_summary(predict_prob, 0.5, data_str)
@@ -45,7 +45,7 @@ function predict_wrapper(pc::StructType, train_x::FairDataset, valid_x::FairData
     end
 
     # proxy label
-    predict_prob = prediction_per_example(pc, train_x, valid_x, test_x; dir=outdir)
+    predict_prob = prediction_per_example(pc, train_x, valid_x, test_x; dir=outdir, debias = true)
     results = dict_init(PREDICT_HEADER)
     for (i, data_str) in enumerate(["train_x", "valid_x", "test_x"])
         p = predict_summary(predict_prob, 0.5, data_str)
@@ -89,7 +89,7 @@ end
 """
 Save prediction results for every example
 """
-function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_fair_label=false)
+function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_fair_label=false, debias = false)
     @inline get_node_id(id::⋁NodeIds) = id.node_id
     @inline get_node_id(id::⋀NodeIds) = @assert false
 
@@ -108,7 +108,7 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
     sensitive_label = data[:, S]
 
     data = reset_end_missing(data)
-    if fairpc isa LatentStructType
+    if fairpc isa LatentStructType && debias == false
         data = reset_end_two_missing(data)
     end
 
@@ -142,7 +142,7 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
     return results
 end
 
-function prediction_per_example(fairpc::StructType, train_x::FairDataset, valid_x::FairDataset, test_x::FairDataset; dir=nothing, use_fair_label=false)
+function prediction_per_example(fairpc::StructType, train_x::FairDataset, valid_x::FairDataset, test_x::FairDataset; dir=nothing, use_fair_label=false, debias = false)
     header = train_x.header
     SV = train_x.SV
 
@@ -152,7 +152,7 @@ function prediction_per_example(fairpc::StructType, train_x::FairDataset, valid_
 
     for (fairdata, data_str) in zip([train_x, valid_x, test_x], ["train_x", "valid_x", "test_x"])
         data = fairdata.data
-        run_results = prediction_per_example(fairpc, fairdata, use_fair_label=use_fair_label)
+        run_results = prediction_per_example(fairpc, fairdata, use_fair_label=use_fair_label, debias = debias)
         results["P(Df|e) $data_str"] = run_results["P(Df|e)"]
         results["P(D|e) $data_str"] = run_results["P(D|e)"]
         results["D $data_str"] = run_results["D"]

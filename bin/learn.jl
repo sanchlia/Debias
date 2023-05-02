@@ -25,7 +25,6 @@ function main()
 
     num_X = args["num_X"]
 
-
     # log config
     if !isdir(outdir)
         mkpath(outdir)
