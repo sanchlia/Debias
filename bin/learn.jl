@@ -52,7 +52,7 @@ function main()
             # missing_perct, deprecated
             # batch_size,
             fold=fold,
-            
+            base_path = base_path,
             # struct learn
             struct_type=struct_type,
             struct_iters=struct_iters,
