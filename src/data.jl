@@ -107,7 +107,7 @@ function load_data(name, T, SV; data_dir="./data/processed_data/", data_type=Boo
     id_dir = "./data/splited_data/10-cv/"
 
     if name == "synthetic"
-        data_dir = "./data/synthetic_data"
+        # data_dir = "./data/synthetic_data"
         data_path = joinpath(data_dir, "$num_X.csv")
         filename = "$name/$num_X"
     else
