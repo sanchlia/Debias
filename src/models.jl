@@ -159,7 +159,8 @@ function learn(name, SV;
                 # missing_perct, deprecated
                 # batch_size,
                 fold,
-                
+                base_path = "./data/processed_data/",
+                                
                 # struct learn
                 struct_type="FairPC",
                 struct_iters=1000,
@@ -183,7 +184,7 @@ function learn(name, SV;
     T = STRUCT_STR2TYPE[struct_type]
 
     # data
-    train_x, valid_x, test_x = load_data(name, T, SV; fold=fold, num_X=num_X)
+    train_x, valid_x, test_x = load_data(name, T, SV; data_dir = base_path, fold=fold, num_X=num_X)
 
     # learn and predicton
     model_fair_psdd(T, train_x, valid_x, test_x;

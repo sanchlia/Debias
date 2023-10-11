@@ -13,6 +13,7 @@ function main()
     patience = args["patience"]
 
     fold = args["fold"]
+    base_path = args["base_path"]
     struct_type = args["struct_type"]
     struct_iters = args["struct_iters"]
     pick_edge = args["pick_edge"]

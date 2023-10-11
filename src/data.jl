@@ -10,13 +10,13 @@ flip_coin, reset_end_two_missing, gen_synthetic_data
 """
 List of data set names in current experiments
 """
-const DATASET_NAMES = ["adult", "compas", "german", "synthetic"]
+const DATASET_NAMES = ["adult", "compas", "german", "synthetic", "income"]
 
 """
 Mapping from dataset names to corresponding decision variable
 """
 const DATASET2DECISION = Dict("adult"=>"target", "compas"=>"ScoreText_", 
-    "german"=>"loan_status", "synthetic"=>"D")
+    "german"=>"loan_status", "synthetic"=>"D", "income"=>"D")
 
 """
 Dataset

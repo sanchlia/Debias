@@ -79,6 +79,9 @@ function add_basic_arg(s::ArgParseSettings)
         "--missing_perct"
             arg_type = Float64
             default = 0.0
+        "--base_path"
+            arg_type = String
+            default = "./data/processed_data/"
         end
 end
 
