@@ -106,14 +106,15 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
     
     S = fairpc.S
     sensitive_label = data[:, S]
-
+    x_missing = reset_all_missing(data, S) 
     data = reset_end_missing(data)
     if fairpc isa LatentStructType && debias == false
         data = reset_end_two_missing(data)
     end
-
+    
     _, flows, node2id = marginal_flows(fairpc.pc, data)
     # compute_exp_flows(fairpc.pc, data)
+    _df, _flows_df, node2id_df = marginal_flows(fairpc.pc, x_missing)
 
     # P_D
     D = get_node_id(node2id[node_D(fairpc)])
