@@ -137,6 +137,7 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
         P_not_Df_x_missing = exp.(_flows_df[:,X_missing_not_df ])
         @assert all(P_not_Df_x_missing .+ P_Df_x_missing .≈ 1.0)   
     else
+        P_Df_x_missing = Vector{Missing}(missing, length(P_D))
         P_Df = Vector{Missing}(missing, length(P_D))
     end
 
