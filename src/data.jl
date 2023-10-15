@@ -310,6 +310,16 @@ function reset_end_two_missing(data::DataFrame)
     DataFrame(m, :auto)
 end
 
+"""                                                                             
+Reset all features to missing to query P(Df)                                    
+"""                                                                             
+function reset_all_missing(data::DataFrame, SV)                                 
+    m = copy(Matrix{Union{Missing, Bool}}(data))                                
+    m[:, 1: end-1] .= missing                                                   
+    df = DataFrame(m, :auto)                                                    
+    df                                                                          
+end 
+
 """
 Flip the coin for every bit in the data set
 """
