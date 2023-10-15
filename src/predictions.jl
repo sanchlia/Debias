@@ -130,7 +130,12 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
         P_Df = exp.(flows[:, Df])
         @assert all(P_Df .+ exp.(flows[:, n_Df]) .≈ 1.0)
         # @assert all(flows[:, Df] .<= 0.0)
-        P_Df = min.(1.0, P_Df)    
+        P_Df = min.(1.0, P_Df) 
+        X_missing_df = get_node_id(node2id_df[node_Df(fairpc)])
+        P_Df_x_missing = exp.(_flows_df[:,X_missing_df ])
+        X_missing_not_df= get_node_id(node2id_df[node_not_Df(fairpc)])
+        P_not_Df_x_missing = exp.(_flows_df[:,X_missing_not_df ])
+        @assert all(P_not_Df_x_missing .+ P_Df_x_missing .≈ 1.0)   
     else
         P_Df = Vector{Missing}(missing, length(P_D))
     end
@@ -139,6 +144,8 @@ function prediction_per_example(fairpc::StructType, fairdata::FairDataset; use_f
     results["P(D|e)"] = P_D
     results["D"] = Int8.(actual_label)
     results["S"] = Int8.(sensitive_label)
+    results["P(Df)"] =  P_Df_x_missing
+
     return results
 end
 
@@ -157,6 +164,7 @@ function prediction_per_example(fairpc::StructType, train_x::FairDataset, valid_
         results["P(D|e) $data_str"] = run_results["P(D|e)"]
         results["D $data_str"] = run_results["D"]
         results["S $data_str"] = run_results["S"]
+        results["P(Df) $data_str"] = run_results["P(Df)"]
     end
 
     if !isnothing(dir)
