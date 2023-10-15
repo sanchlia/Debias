@@ -17,8 +17,8 @@ OPTS = (
 TRAIN_HEADER = ["iter", "time", "total_time", "circuit_size", "cross_entropy_D", "cross_entropy_Df", "train_discrimination", "valid_discrimination", "test_discrimination", "train_mll", "valid_mll", "test_mll", "struct?", "stop?"]
 CPT_HEADER = ["P(D)", "P(Df)", "P(S)", "P(D|Df,S)", "P(D|Df,notS)", "P(D|notDf,S)", "P(D|notDf,notS)"]
 PREDICT_HEADER = ["dataset", "variable", "TP", "TN", "FP", "FN", "accuracy"]
-PREDICT_EXAMPLE_HEADER = ["S train_x", "D train_x", "P(Df|e) train_x", "P(D|e) train_x", "S valid_x", "D valid_x", "P(Df|e) valid_x", "P(D|e) valid_x", "S test_x", "D test_x", "P(Df|e) test_x", "P(D|e) test_x"]
-
+# PREDICT_EXAMPLE_HEADER = ["S train_x", "D train_x", "P(Df|e) train_x", "P(D|e) train_x", "S valid_x", "D valid_x", "P(Df|e) valid_x", "P(D|e) valid_x", "S test_x", "D test_x", "P(Df|e) test_x", "P(D|e) test_x"]
+PREDICT_EXAMPLE_HEADER = ["S train_x", "D train_x", "P(Df|e) train_x", "P(D|e) train_x","P(Df) train_x" ,  "S valid_x", "D valid_x", "P(Df|e) valid_x", "P(D|e) valid_x", "P(Df) valid_x", "S test_x", "D test_x", "P(Df|e) test_x", "P(D|e) test_x", "P(Df) test_x"]
 """
 """
 function arg2str(args)
