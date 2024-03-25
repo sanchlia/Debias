@@ -102,9 +102,9 @@ end
 Load data from directory `data_dir`
 Return header and data
 """
-function load_data(name, T, SV; data_dir="./data/processed_data/", data_type=Bool, fold=1, num_X=nothing)
+function load_data(name, T, SV; data_dir="./data/processed_data/", data_type=Bool, fold=1, num_X=nothing, id_dir = "./data/splited_data/10-cv/")
     @assert name in DATASET_NAMES "Dataset $name not found in directory $data_dir"
-    id_dir = "./data/splited_data/10-cv/"
+    # id_dir = "./data/splited_data/10-cv/"
 
     if name == "synthetic"
         # data_dir = "./data/synthetic_data"

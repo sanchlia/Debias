@@ -82,6 +82,9 @@ function add_basic_arg(s::ArgParseSettings)
         "--base_path"
             arg_type = String
             default = "./data/processed_data/"
+        "--id_dir"
+            arg_type = String 
+            default = "./data/splited_data/10-cv/"
         end
 end
 

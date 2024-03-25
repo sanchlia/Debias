@@ -23,6 +23,7 @@ function main()
     init_para_alg = args["init_para_alg"]
     para_iters = args["para_iters"]
     pseudocount = args["pseudocount"]
+    id_dir = args["id_dir"]
 
     num_X = args["num_X"]
 
@@ -53,6 +54,7 @@ function main()
             # batch_size,
             fold=fold,
             base_path = base_path,
+            id_dir = id_dir,
             # struct learn
             struct_type=struct_type,
             struct_iters=struct_iters,

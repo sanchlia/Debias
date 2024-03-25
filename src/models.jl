@@ -160,6 +160,7 @@ function learn(name, SV;
                 # batch_size,
                 fold,
                 base_path = "./data/processed_data/",
+                id_dir = "./data/splited_data/10-cv/",
                                 
                 # struct learn
                 struct_type="FairPC",
@@ -184,7 +185,7 @@ function learn(name, SV;
     T = STRUCT_STR2TYPE[struct_type]
 
     # data
-    train_x, valid_x, test_x = load_data(name, T, SV; data_dir = base_path, fold=fold, num_X=num_X)
+    train_x, valid_x, test_x = load_data(name, T, SV; data_dir = base_path, fold=fold, num_X=num_X, id_dir = id_dir)
 
     # learn and predicton
     model_fair_psdd(T, train_x, valid_x, test_x;
