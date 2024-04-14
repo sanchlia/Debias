@@ -105,7 +105,8 @@ Return header and data
 function load_data(name, T, SV; data_dir="./data/processed_data/", data_type=Bool, fold=1, num_X=nothing, id_dir = "./data/splited_data/10-cv/")
     @assert name in DATASET_NAMES "Dataset $name not found in directory $data_dir"
     # id_dir = "./data/splited_data/10-cv/"
-
+    println("id_dir")
+    println(id_dir)
     if name == "synthetic"
         # data_dir = "./data/synthetic_data"
         data_path = joinpath(data_dir, "$num_X.csv")
@@ -121,7 +122,7 @@ function load_data(name, T, SV; data_dir="./data/processed_data/", data_type=Boo
     train_ids = collect(skipmissing(CSV.read(joinpath(id_dir, filename, "train_ids.csv"), DataFrame; header=true, strict=true)[:, fold]))
     valid_ids = collect(skipmissing(CSV.read(joinpath(id_dir, filename, "valid_ids.csv"), DataFrame; header=true, strict=true)[:, fold]))
     test_ids = collect(skipmissing(CSV.read(joinpath(id_dir, filename, "test_ids.csv"), DataFrame; header=true, strict=true)[:, fold]))
-
+    
     @assert isempty(intersect(train_ids, valid_ids)) && isempty(intersect(train_ids, test_ids))  && isempty(intersect(test_ids, valid_ids)) 
     
     dataframes = dataframe[train_ids, :], dataframe[valid_ids, :], dataframe[test_ids, :]
